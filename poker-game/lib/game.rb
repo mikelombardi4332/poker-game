@@ -17,7 +17,20 @@ class PokerGame
   end
 
   def evaluate_winner
-    # Winner logic for hands to be implemented
+    best_hand = nil
+    winning_player = nil
+
+    @players.each do |player|
+      current_hand = player.hand
+      if best_hand.nil? || current_hand > best_hand
+        best_hand = current_hand
+        winning_player = player
+      elsif current_hand == best_hand
+        # Handle tie-breaking logic if necessary
+      end
+    end
+
+    winning_player
   end
 
   def bet(amount)

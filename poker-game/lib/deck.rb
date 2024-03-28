@@ -29,3 +29,4 @@ class Deck
 end
 
 
+Deck.new(5)
