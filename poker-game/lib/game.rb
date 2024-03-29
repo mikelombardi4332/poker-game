@@ -1,5 +1,5 @@
 require_relative 'deck'
-
+require_relative 'player'
 class PokerGame
   attr_reader :deck, :players, :pot
 
@@ -103,3 +103,21 @@ class PokerGame
     discarded_cards
   end
 end
+
+# Test scenario
+game = PokerGame.new(4)
+
+# Deal hands
+puts "Dealing hands..."
+game.deal_hands
+
+# Display players' hands
+puts "Players' hands:"
+game.players.each do |player|
+  puts "#{player.name}: #{player.hand.join(', ')}"
+end
+
+# Evaluate winner
+puts "Evaluating winner..."
+winner = game.evaluate_winner
+puts "The winner is: #{winner.name} with a #{winner.hand.join(', ')}"

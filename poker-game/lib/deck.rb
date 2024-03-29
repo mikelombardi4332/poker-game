@@ -1,32 +1,28 @@
 class Deck
     attr_reader :cards
-    suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
-    rank = ['2','3','4','5','6','7','8','9','10','Jack','Queen','King','Ace']
-
+  
+    SUITS = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
+    RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
+  
     def initialize
-        @cards = []
-        new_deck
+      @cards = []
+      new_deck
     end
-
-
+  
     def new_deck
-        suits.each do |suits|
-            rank.each do |rank|
-                @cards << "#{rank} of #{suit}"
-            end
+      SUITS.each do |suit|
+        RANKS.each do |rank|
+          @cards << "#{rank} of #{suit}"
         end
+      end
     end
-
+  
     def shuffle
-        @cards.shuffle!
+      @cards.shuffle!
     end
-
-    def deal
-        hand = @cards.shift(5)
-        hand
+  
+    def deal(num_cards)
+      @cards.shift(num_cards)
     end
-
-end
-
-
-Deck.new(5)
+  end
+  
