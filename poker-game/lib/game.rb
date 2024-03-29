@@ -12,7 +12,7 @@ class PokerGame
 
   def deal_hands
     @players.each do |player|
-      player.hand = @deck.deal
+      player.receive(@deck.deal(5))
     end
   end
 
@@ -22,22 +22,25 @@ class PokerGame
 
     @players.each do |player|
       current_hand = player.hand
-      if best_hand.nil? || current_hand > best_hand
-        best_hand = current_hand
-        winning_player = player
-      elsif current_hand == best_hand
-        # Handle tie-breaking logic if necessary
-      end
     end
 
     winning_player
   end
 
-  def bet(amount)
+  def bet(player, amount)
+    player.chips -= amount
     @pot += amount
   end
 
   def payout(winner)
-    # Payout logic here
+    winner.chips += @pot
+    @pot = 0
+  end
+
+  def draw(player, indexes)
+    discarded_cards = player.hand.values_at(*indexes)
+    player.discard(indexes)
+    player.receive(@deck.deal(indexes.length))
+    discarded_cards
   end
 end
