@@ -1,12 +1,55 @@
-require_relative 'deck'
-require_relative 'player'
+class Player
+  attr_accessor :name, :hand
+
+  def initialize(name)
+    @name = name
+    @hand = []
+  end
+
+  def receive(cards)
+    @hand += cards
+  end
+
+  def discard(indexes)
+    indexes.sort.reverse_each { |i| @hand.delete_at(i) }
+  end
+end
+
+class Deck
+  attr_reader :cards
+
+  SUITS = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
+  RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
+
+  def initialize
+    @cards = []
+    new_deck
+  end
+
+  def new_deck
+    SUITS.each do |suit|
+      RANKS.each do |rank|
+        @cards << "#{rank} of #{suit}"
+      end
+    end
+  end
+
+  def shuffle
+    @cards.shuffle!
+  end
+
+  def deal(num_cards)
+    @cards.shift(num_cards)
+  end
+end
+
 class PokerGame
   attr_reader :deck, :players, :pot
 
   def initialize(num_players)
     @deck = Deck.new
     @deck.shuffle
-    @players = Array.new(num_players) { Player.new }
+    @players = Array.new(num_players) { |i| Player.new("Player #{i + 1}") }
     @pot = 0
   end
 
